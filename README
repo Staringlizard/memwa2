@@ -1,0 +1,119 @@
+*** Building software:
+
+1. Download the gnu arm cross compiler package
+2. Download memwa2 source code from github
+3. Extract everything and enter folder memwa2
+4. Modify PATH variable to include the bin folder for cross compiler
+5. Make
+6. Done
+
+*** Flashing software:
+
+1. Copy the file ./out_target/target.bin to the root directory on the sdcard
+2. Insert the SD card and startup hardware
+3. New firmware will automatically start flash procedure if firmware file is found
+4. If software is flashed successfully the target.bin file will be removed
+
+*** SD card:
+
+There are some folders that can be added to the sdcard
+in order to configure the software and to run programs.
+
+"conf" folder
+
+  "key.cfg" file
+
+    This file contain entries like this -> "2A:0,0". This specific entry
+    means that the USB scan code 2A (back space) should be mapped
+    to the commodore key matrix equivalent of 0 and 0. In other words
+    the CIA1 IC portA bit 0 and CIA1 portB bit 0 will have a connection.
+
+  "palette.cfg" file
+
+    This file contains all c64 colors in RGB888 format. In addition to this
+    it also contains 3 extra colors that are used for text background,
+    text forground and marker.
+
+"d64, t64, tap, prg" folders
+
+    Here all programs should be stored.
+
+"rom" folder
+
+    "cc_brom.bin"
+
+      Contains the basic rom.
+
+    "cc_crom.bin"
+
+      Contains the char rom.
+
+    "cc_krom.bin"
+
+      Contains the kernal rom.
+
+    "dd_dos.bin"
+
+      Contains the disk drive rom.
+
+"res" folder
+
+  Contains the bitmaps used in menu.
+
+*** Startup:
+
+1. Unzip the sdcard.zip file onto an sdcard
+2. Insert sdcard into memwa2 board
+3. Power on
+
+*** Key shortcuts:
+
+Ctrl + Esc: Menu
+Ctrl + F1: Show info
+Ctrl + F2: Activate/deactivate disk drive
+Ctrl + F3: Activate/deactivate freq lock
+Ctrl + F4: Full/half emulated frame rate
+Ctrl + F5: Play/Stop datasette
+Ctrl + F6: Clear last message
+Ctrl + F9: C64 palette
+Ctrl + F10: C64 soft reset
+Ctrl + F11: C64 hard reset
+Ctrl + F12: Hardware reset
+Joystick A: Arrow keys
+Joystick B: Num keys
+
+*** Design:
+
+             +-----+ +-----+ +-----+ +-----+ +-----+ +-----+    +-----+ +-----+ +-----+ +-----+     ^
+Emulators    | vic | | tap | | sid | | cia | | cpu | | bus |    | via | | fdd | | cpu | | bus |     |
+             +-----+ +-----+ +-----+ +-----+ +-----+ +-----+    +-----+ +-----+ +-----+ +-----+     |
+                                                                                                    |
+             +---------------------------------------------+    +-----------------------------+     +
+             |                   emuccif                   |    |            emuddif          |  Emulator
+             +----------------------+----------------------+    +---------------+-------------+
+Interface                           |                                           |
+             +----------------------+-------------------------------------------+-------------+
+             |                                    hostif                                      |  Hardware
+             +--------------------------------------------------------------------------------+     +
+                                                                                                    |
+                                               +-----------+                                        |
+Higher layer                           +-------+    sm     |                                        |
+                                       |       +-----+-----+                                        |
+                                       |             |                                              |
+                                 +-----+----+  +-----+-----+  +-----------+                         |
+Util layer                       |   stage  |  |   keybd   |  |  console  |                         |
+                                 +----------+  +-----+-----+  +---------+-+                         |
+                                                     |                  |                           |
+                                 +-----------+       | +------------+   |                           |
+Mware layer                      |   fatfs   |       +-+    usb     +---+                           |
+                                 +-----------+         +------------+                               |
+                                                                                                    |
+             +-------+ +---+ +----+ +-----+ +---+ +------+ +-----+ +------+ +-------+ +-------+     |
+Driver layer |adv7511| |crc| |disp| |joyst| |rng| |sdcard| |sdram| |sidbus| |usbd_ll| |usbh_ll|     |
+             +-------+ +---+ +----+ +-----+ +---+ +------+ +-----+ +------+ +-------+ +-------+     |
+                                                                                                    |
+             +--------------------------------------------------------------------------------+     |
+HAL layer    |                                      HAL                                       |     |
+             +--------------------------------------------------------------------------------+     v
+
+
