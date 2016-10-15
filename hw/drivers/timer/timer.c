@@ -115,7 +115,10 @@ void systimer_tick()
     g_timer_ms++;
     if(g_timer == 100)
     {
-        g_if_cc_emu.if_emu_cc_time.time_tenth_second_fp();
+        if(g_if_cc_emu.if_emu_cc_time.time_tenth_second_fp != NULL)
+        {
+            g_if_cc_emu.if_emu_cc_time.time_tenth_second_fp();
+        }
         g_timer = 0;
     }
 }

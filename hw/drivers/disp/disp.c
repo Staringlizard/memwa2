@@ -142,8 +142,8 @@ void disp_init(disp_mode_t disp_mode)
     HAL_LTDC_EnableCLUT(&g_ltdc_handle, 0);
     HAL_LTDC_EnableCLUT(&g_ltdc_handle, 1);
 
-    /*HAL_LTDC_ProgramLineEvent(&g_ltdc_handle, 200);
-    __HAL_LTDC_ENABLE_IT(&g_ltdc_handle, LTDC_IT_LI);*/
+    HAL_LTDC_ProgramLineEvent(&g_ltdc_handle, 200);
+    __HAL_LTDC_DISABLE_IT(&g_ltdc_handle, LTDC_IT_LI); /* Disable line events for now */
 }
 
 void *disp_get_layer(uint8_t layer)

@@ -101,6 +101,7 @@ int main()
         if(diag_status != DIAG_STATUS_OK)
         {
             main_error("Diagnostic did not pass!", __FILE__, __LINE__, (uint32_t)diag_status);
+            while(1){;}
         }
 
         while(1)
