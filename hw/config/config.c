@@ -390,13 +390,13 @@ void HAL_SIDBUS_MspInit() /* Memwa2 specific */
     HAL_GPIO_Init(GPIOI, &GPIO_Init);
 
     /* Sidbus clock external interrupt */
-    GPIO_Init.Mode = GPIO_MODE_IT_RISING;
+    GPIO_Init.Mode = GPIO_MODE_IT_FALLING;
     GPIO_Init.Pull = GPIO_NOPULL;
     GPIO_Init.Speed = GPIO_SPEED_FAST;
     GPIO_Init.Pin = GPIO_PIN_13; /* A8 PG13 SIDBUS CLK */
     HAL_GPIO_Init(GPIOG, &GPIO_Init);
 
-    EXTI->RTSR &= ~GPIO_PIN_13; /* Disable sidbus irq directly */
+    EXTI->FTSR &= ~GPIO_PIN_13; /* Disable sidbus irq directly */
 
     /*
      * Enable and set interrupt.
