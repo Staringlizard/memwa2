@@ -318,7 +318,8 @@ void HAL_LTDC_MspInit(LTDC_HandleTypeDef *hltdc)
 
     GPIO_Init.Pin = GPIO_PIN_6 | /* J15 PG6 LCD_R7 */
                     GPIO_PIN_7 | /* J14 PG7 LCD_CLK */
-                    GPIO_PIN_11; /* B9 PG11 LCD_B3 */
+                    GPIO_PIN_11 | /* B9 PG11 LCD_B3 */
+                    GPIO_PIN_12; /* B8 PG12 LCD_B1 */ 
     HAL_GPIO_Init(GPIOG, &GPIO_Init);
 
     GPIO_Init.Pin = GPIO_PIN_2; /* F4 PH2 LCD_R0 */
@@ -331,8 +332,8 @@ void HAL_LTDC_MspInit(LTDC_HandleTypeDef *hltdc)
 
     GPIO_Init.Alternate = GPIO_AF9_LTDC;
 
-    GPIO_Init.Pin = GPIO_PIN_10 | /* B10 PG10 LCD_G3 */
-                    GPIO_PIN_12; /* B8 PG12 LCD_B1 */ 
+    GPIO_Init.Pin = GPIO_PIN_10; /* B10 PG10 LCD_G3 */
+
     HAL_GPIO_Init(GPIOG, &GPIO_Init);
 
     GPIO_Init.Pin = GPIO_PIN_0 | /* R5 PB0 LCD_R3 */
