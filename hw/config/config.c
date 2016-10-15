@@ -414,6 +414,7 @@ void HAL_JOYST_MspInit() /* Memwa2 specific */
 
     /* Enable GPIOs clock */
     __HAL_RCC_GPIOA_CLK_ENABLE();
+    __HAL_RCC_GPIOB_CLK_ENABLE();
     __HAL_RCC_GPIOE_CLK_ENABLE();
     __HAL_RCC_GPIOF_CLK_ENABLE();
     __HAL_RCC_GPIOG_CLK_ENABLE();
@@ -423,15 +424,15 @@ void HAL_JOYST_MspInit() /* Memwa2 specific */
     GPIO_Init.Pull = GPIO_PULLUP;
     GPIO_Init.Speed = GPIO_SPEED_LOW;
 
-    GPIO_Init.Pin = GPIO_PIN_4; /* H4 PH4 JOY_B5 FIRE */
-    HAL_GPIO_Init(GPIOH, &GPIO_Init);
+    GPIO_Init.Pin = GPIO_PIN_10; /* D15 PA10 JOY_A5 FIRE */
+    HAL_GPIO_Init(GPIOA, &GPIO_Init);
+
+    GPIO_Init.Pin = GPIO_PIN_5; /* A6 PB5 JOY_A3 LEFT */
+    HAL_GPIO_Init(GPIOB, &GPIO_Init);
 
     GPIO_Init.Pin = GPIO_PIN_2 | /* A2 PE2 JOY_A1 UP */
                     GPIO_PIN_3; /* A1 PE3 JOY_A2 DOWN */
     HAL_GPIO_Init(GPIOE, &GPIO_Init);
-
-    GPIO_Init.Pin = GPIO_PIN_5; /* A6 PB5 JOY_A3 LEFT */
-    HAL_GPIO_Init(GPIOB, &GPIO_Init);
 
     GPIO_Init.Pin = GPIO_PIN_6 | /* K2 PF6 JOY_B3 LEFT */
                     GPIO_PIN_7 | /* K1 PF7 JOY_B4 RIGHT */
@@ -439,11 +440,11 @@ void HAL_JOYST_MspInit() /* Memwa2 specific */
                     GPIO_PIN_9; /* L2 PF9 JOY_B2 DOWN */
     HAL_GPIO_Init(GPIOF, &GPIO_Init);
 
-    GPIO_Init.Pin = GPIO_PIN_10; /* D15 PA10 JOY_A5 FIRE */
-    HAL_GPIO_Init(GPIOA, &GPIO_Init);
-
     GPIO_Init.Pin = GPIO_PIN_14; /* A7 PG14 JOY_A4 RIGHT */
     HAL_GPIO_Init(GPIOG, &GPIO_Init);
+
+    GPIO_Init.Pin = GPIO_PIN_4; /* H4 PH4 JOY_B5 FIRE */
+    HAL_GPIO_Init(GPIOH, &GPIO_Init);
 
 
     /* Enable and set interrupt for joystick A and B */

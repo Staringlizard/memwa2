@@ -37,7 +37,7 @@
 #define ADV7511_REG_STATUS 0xC8
 #define ADV7511_REG_DETECT 0x42
 
-static I2C_HandleTypeDef g_12c_handle;
+static I2C_HandleTypeDef g_i2c_handle;
 
 __weak void HAL_ADV7511_MspInit()
 {
@@ -48,22 +48,22 @@ void adv7511_init()
 {
     HAL_StatusTypeDef ret = HAL_OK;
 
-    g_12c_handle.Instance = I2C4;
-    g_12c_handle.Init.Timing = I2C_TIMING;
-    g_12c_handle.Init.OwnAddress1 = I2C_OWN_ADDRESS;
-    g_12c_handle.Init.AddressingMode  = I2C_ADDRESSINGMODE_7BIT;
-    g_12c_handle.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
-    g_12c_handle.Init.OwnAddress2 = I2C_OWN_ADDRESS;
-    g_12c_handle.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
-    g_12c_handle.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;  
+    g_i2c_handle.Instance = I2C4;
+    g_i2c_handle.Init.Timing = I2C_TIMING;
+    g_i2c_handle.Init.OwnAddress1 = I2C_OWN_ADDRESS;
+    g_i2c_handle.Init.AddressingMode  = I2C_ADDRESSINGMODE_7BIT;
+    g_i2c_handle.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+    g_i2c_handle.Init.OwnAddress2 = I2C_OWN_ADDRESS;
+    g_i2c_handle.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+    g_i2c_handle.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
 
-    ret = HAL_I2C_Init(&g_12c_handle);
+    ret = HAL_I2C_Init(&g_i2c_handle);
     if(ret != HAL_OK)
     {
         main_error("Failed to initialize I2C!", __FILE__, __LINE__, ret);
     }
 
-    HAL_I2CEx_ConfigAnalogFilter(&g_12c_handle, I2C_ANALOGFILTER_ENABLE);
+    HAL_I2CEx_ConfigAnalogFilter(&g_i2c_handle, I2C_ANALOGFILTER_ENABLE);
 
     adv7511_wr_reg(ADV7511_REG_IRQ, 0xFF); /* Clear interrupts */
 
@@ -110,7 +110,7 @@ void adv7511_configure()
 
 void adv7511_wr_reg(uint8_t reg, uint8_t val)
 {
-    if(HAL_I2C_Master_WriteReg(&g_12c_handle, (uint16_t)I2C_ADDRESS, &reg, &val, 2000) != HAL_OK)
+    if(HAL_I2C_Master_WriteReg(&g_i2c_handle, (uint16_t)I2C_ADDRESS, &reg, &val, 2000) != HAL_OK)
     {
         main_error("Failed to write I2C register!", __FILE__, __LINE__, reg);
     }
@@ -120,7 +120,7 @@ uint8_t adv7511_rd_reg(uint8_t reg)
 {
     uint8_t val;
 
-    if(HAL_I2C_Master_ReadReg(&g_12c_handle, (uint16_t)I2C_ADDRESS, &reg, &val, 2000) != HAL_OK)
+    if(HAL_I2C_Master_ReadReg(&g_i2c_handle, (uint16_t)I2C_ADDRESS, &reg, &val, 2000) != HAL_OK)
     {
         main_error("Failed to read I2C register!", __FILE__, __LINE__, reg);
     }
@@ -154,5 +154,5 @@ void adv7511_irq()
         }
     }
 
-    adv7511_wr_reg(ADV7511_REG_IRQ, val); /* Clear interrupt */
+    adv7511_wr_reg(ADV7511_REG_IRQ, 0xFF); /* Clear interrupt */
 }
