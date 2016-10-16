@@ -2,14 +2,14 @@
   ******************************************************************************
   * @file    stm32f767xx.h
   * @author  MCD Application Team
-  * @version V1.1.0
-  * @date    22-April-2016
+  * @version V1.1.2
+  * @date    23-September-2016 
   * @brief   CMSIS Cortex-M7 Device Peripheral Access Layer Header File.
   *
   *          This file contains:
   *           - Data structures and the address mapping for all peripherals
   *           - Peripheral's registers declarations and bits definition
-  *           - Macros to access peripheralï¿½s registers hardware
+  *           - Macros to access peripheral’s registers hardware
   *
   ******************************************************************************
   * @attention
@@ -173,10 +173,10 @@ typedef enum
   I2C4_EV_IRQn                = 95,     /*!< I2C4 Event Interrupt                                              */
   I2C4_ER_IRQn                = 96,     /*!< I2C4 Error Interrupt                                              */
   SPDIF_RX_IRQn               = 97,     /*!< SPDIF-RX global Interrupt                                         */
-  DFSDM1_FLT0_IRQn            = 99,     /*!< DFSDM1 Filter 0 global Interrupt                                  */
-  DFSDM1_FLT1_IRQn            = 100,    /*!< DFSDM1 Filter 1 global Interrupt                                  */
-  DFSDM1_FLT2_IRQn            = 101,    /*!< DFSDM1 Filter 2 global Interrupt                                  */
-  DFSDM1_FLT3_IRQn            = 102,    /*!< DFSDM1 Filter 3 global Interrupt                                  */
+  DFSDM1_FLT0_IRQn	          = 99,     /*!< DFSDM1 Filter 0 global Interrupt                                  */
+  DFSDM1_FLT1_IRQn	          = 100,    /*!< DFSDM1 Filter 1 global Interrupt                                  */
+  DFSDM1_FLT2_IRQn	          = 101,    /*!< DFSDM1 Filter 2 global Interrupt                                  */
+  DFSDM1_FLT3_IRQn	          = 102,    /*!< DFSDM1 Filter 3 global Interrupt                                  */
   SDMMC2_IRQn                 = 103,    /*!< SDMMC2 global Interrupt                                           */
   CAN3_TX_IRQn                = 104,    /*!< CAN3 TX Interrupt                                                 */
   CAN3_RX0_IRQn               = 105,    /*!< CAN3 RX0 Interrupt                                                */
@@ -325,7 +325,6 @@ typedef struct
   __IO uint32_t IER;          /*!< CEC interrupt enable register,                              Address offset:0x14 */
 }CEC_TypeDef;
 
-
 /** 
   * @brief CRC calculation unit 
   */
@@ -451,7 +450,6 @@ typedef struct
   __IO uint32_t LIFCR;  /*!< DMA low interrupt flag clear register,  Address offset: 0x08 */
   __IO uint32_t HIFCR;  /*!< DMA high interrupt flag clear register, Address offset: 0x0C */
 } DMA_TypeDef;
-
 
 /** 
   * @brief DMA2D Controller
@@ -900,7 +898,6 @@ typedef struct
   __IO uint32_t   DIR;          /*!< Debug Information register,         Address offset: 0x18 */
 } SPDIFRX_TypeDef;
 
-
 /** 
   * @brief SD host Interface
   */
@@ -1237,8 +1234,8 @@ typedef struct
   __IO uint32_t RDFR;             /*!< MDIOS Configuration Register (MDIOS_CR),        Address offset: 0Ch       */ 
   __IO uint32_t CRDFR;            /*!< MDIOS Configuration Register (MDIOS_CR),        Address offset: 10h       */   
   __IO uint32_t SR;               /*!< MDIOS Configuration Register (MDIOS_CR),        Address offset: 14h       */
-  __IO uint32_t CLRFR;            /*!< MDIOS Configuration Register (MDIOS_CR),        Address offset: 18h       */     
-  uint32_t RESERVED0[57];         /* Reserved                                          Address offset: 1Ch       */ 
+  __IO uint32_t CLRFR;            /*!< MDIOS Configuration Register (MDIOS_CR),        Address offset: 18h       */   	
+  uint32_t RESERVED0[57];         /* Reserved                                          Address offset: 1Ch       */	
   __IO uint32_t DINR0;            /*!< MDIOS Input Data Register (MDIOS_DINR0),        Address offset: 100h      */    
   __IO uint32_t DINR1;            /*!< MDIOS Input Data Register (MDIOS_DINR1),        Address offset: 104h      */     
   __IO uint32_t DINR2;            /*!< MDIOS Input Data Register (MDIOS_DINR2),        Address offset: 108h      */    
@@ -1502,7 +1499,7 @@ typedef struct
 #define IWDG                ((IWDG_TypeDef *) IWDG_BASE)
 #define SPI2                ((SPI_TypeDef *) SPI2_BASE)
 #define SPI3                ((SPI_TypeDef *) SPI3_BASE)
-#define SPDIFRX             ((SPDIFRX_TypeDef *) SPDIFRX_BASE) 
+#define SPDIFRX             ((SPDIFRX_TypeDef *) SPDIFRX_BASE)
 #define USART2              ((USART_TypeDef *) USART2_BASE)
 #define USART3              ((USART_TypeDef *) USART3_BASE)
 #define UART4               ((USART_TypeDef *) UART4_BASE)
@@ -4007,7 +4004,6 @@ typedef struct
                                                                      
 /********************  Bit definition for DMA2D_BGCLUT register  **************/
 
-
 /******************************************************************************/
 /*                                                                            */
 /*                    External Interrupt/Event Controller                     */
@@ -4333,6 +4329,7 @@ typedef struct
 /*******************  Bits definition for FLASH_OPTCR1 register  ***************/
 #define FLASH_OPTCR1_BOOT_ADD0              0x0000FFFFU
 #define FLASH_OPTCR1_BOOT_ADD1              0xFFFF0000U
+
 
 /******************************************************************************/
 /*                                                                            */
@@ -6417,7 +6414,7 @@ typedef struct
 #define RTC_CR_OSEL_1                        0x00400000U
 #define RTC_CR_POL                           0x00100000U
 #define RTC_CR_COSEL                         0x00080000U
-#define RTC_CR_BCK                           0x00040000U
+#define RTC_CR_BKP                           0x00040000U
 #define RTC_CR_SUB1H                         0x00020000U
 #define RTC_CR_ADD1H                         0x00010000U
 #define RTC_CR_TSIE                          0x00008000U
@@ -6436,6 +6433,9 @@ typedef struct
 #define RTC_CR_WUCKSEL_0                     0x00000001U
 #define RTC_CR_WUCKSEL_1                     0x00000002U
 #define RTC_CR_WUCKSEL_2                     0x00000004U
+
+/* Legacy define */
+#define RTC_CR_BCK                           RTC_CR_BKP
 
 /********************  Bits definition for RTC_ISR register  ******************/
 #define RTC_ISR_ITSF                         0x00020000U
@@ -7007,7 +7007,6 @@ typedef struct
 /*******************  Bit definition for SPDIFRX_DIR register    *******************/
 #define  SPDIFRX_DIR_THI                   0x000013FFU        /*!<Threshold LOW      */
 #define  SPDIFRX_DIR_TLO                   0x1FFF0000U        /*!<Threshold HIGH     */
-
 
 /******************************************************************************/
 /*                                                                            */
@@ -9348,6 +9347,7 @@ typedef struct
 #define USB_OTG_PCGCCTL_GATECLK                 0x00000002U            /*!<Bit 0 */
 #define USB_OTG_PCGCCTL_PHYSUSP                 0x00000010U            /*!<Bit 1 */
 
+
 /******************************************************************************/
 /*                                                                            */
 /*                        JPEG Encoder/Decoder                                */
@@ -9558,7 +9558,7 @@ typedef struct
 /******************************* CAN Instances ********************************/
 #define IS_CAN_ALL_INSTANCE(__INSTANCE__) (((__INSTANCE__) == CAN1) || \
                                            ((__INSTANCE__) == CAN2) || \
-                                           ((__INSTANCE__) == CAN3))
+									       ((__INSTANCE__) == CAN3))
 /******************************* CRC Instances ********************************/
 #define IS_CRC_ALL_INSTANCE(__INSTANCE__) ((__INSTANCE__) == CRC)
 
@@ -9606,28 +9606,28 @@ typedef struct
 
 /******************************* GPIO Instances *******************************/
 #define IS_GPIO_ALL_INSTANCE(__INSTANCE__) (((__INSTANCE__) == GPIOA) || \
-                                        ((__INSTANCE__) == GPIOB) || \
-                                        ((__INSTANCE__) == GPIOC) || \
-                                        ((__INSTANCE__) == GPIOD) || \
-                                        ((__INSTANCE__) == GPIOE) || \
-                                        ((__INSTANCE__) == GPIOF) || \
-                                        ((__INSTANCE__) == GPIOG) || \
-                                        ((__INSTANCE__) == GPIOH) || \
-                                        ((__INSTANCE__) == GPIOI) || \
-                                        ((__INSTANCE__) == GPIOJ) || \
-                                        ((__INSTANCE__) == GPIOK))
-                                        
+                                            ((__INSTANCE__) == GPIOB) || \
+                                            ((__INSTANCE__) == GPIOC) || \
+                                            ((__INSTANCE__) == GPIOD) || \
+                                            ((__INSTANCE__) == GPIOE) || \
+                                            ((__INSTANCE__) == GPIOF) || \
+                                            ((__INSTANCE__) == GPIOG) || \
+                                            ((__INSTANCE__) == GPIOH) || \
+                                            ((__INSTANCE__) == GPIOI) || \
+                                            ((__INSTANCE__) == GPIOJ) || \
+                                            ((__INSTANCE__) == GPIOK))
+										
 #define IS_GPIO_AF_INSTANCE(__INSTANCE__)   (((__INSTANCE__) == GPIOA) || \
-                                        ((__INSTANCE__) == GPIOB) || \
-                                        ((__INSTANCE__) == GPIOC) || \
-                                        ((__INSTANCE__) == GPIOD) || \
-                                        ((__INSTANCE__) == GPIOE) || \
-                                        ((__INSTANCE__) == GPIOF) || \
-                                        ((__INSTANCE__) == GPIOG) || \
-                                        ((__INSTANCE__) == GPIOH) || \
-                                        ((__INSTANCE__) == GPIOI) || \
-                                        ((__INSTANCE__) == GPIOJ) || \
-                                        ((__INSTANCE__) == GPIOK))
+                                             ((__INSTANCE__) == GPIOB) || \
+                                             ((__INSTANCE__) == GPIOC) || \
+                                             ((__INSTANCE__) == GPIOD) || \
+                                             ((__INSTANCE__) == GPIOE) || \
+                                             ((__INSTANCE__) == GPIOF) || \
+                                             ((__INSTANCE__) == GPIOG) || \
+                                             ((__INSTANCE__) == GPIOH) || \
+                                             ((__INSTANCE__) == GPIOI) || \
+                                             ((__INSTANCE__) == GPIOJ) || \
+                                             ((__INSTANCE__) == GPIOK))
 
 /****************************** CEC Instances *********************************/
 #define IS_CEC_ALL_INSTANCE(__INSTANCE__) ((__INSTANCE__) == CEC)
@@ -9638,14 +9638,14 @@ typedef struct
                                         
 /******************************** I2C Instances *******************************/
 #define IS_I2C_ALL_INSTANCE(__INSTANCE__) (((__INSTANCE__) == I2C1) || \
-                                       ((__INSTANCE__) == I2C2) || \
-                                       ((__INSTANCE__) == I2C3) || \
-                                       ((__INSTANCE__) == I2C4))
+                                           ((__INSTANCE__) == I2C2) || \
+                                           ((__INSTANCE__) == I2C3) || \
+                                           ((__INSTANCE__) == I2C4))
 
 /******************************** I2S Instances *******************************/
 #define IS_I2S_ALL_INSTANCE(__INSTANCE__)  (((__INSTANCE__) == SPI1) || \
-                                    ((__INSTANCE__) == SPI2) || \
-                                    ((__INSTANCE__) == SPI3))
+                                            ((__INSTANCE__) == SPI2) || \
+                                            ((__INSTANCE__) == SPI3))
 
 /******************************* LPTIM Instances ********************************/
 #define IS_LPTIM_INSTANCE(__INSTANCE__) ((__INSTANCE__) == LPTIM1)
@@ -9658,6 +9658,7 @@ typedef struct
 
 /****************************** MDIOS Instances ********************************/
 #define IS_JPEG_ALL_INSTANCE(__INSTANCE__)  ((__INSTANCE__) == JPEG)
+
 
 /******************************* RNG Instances ********************************/
 #define IS_RNG_ALL_INSTANCE(__INSTANCE__)  ((__INSTANCE__) == RNG)
@@ -9682,11 +9683,11 @@ typedef struct
                                      
 /******************************** SPI Instances *******************************/
 #define IS_SPI_ALL_INSTANCE(__INSTANCE__) (((__INSTANCE__) == SPI1) || \
-                                       ((__INSTANCE__) == SPI2) || \
-                                       ((__INSTANCE__) == SPI3) || \
-                                       ((__INSTANCE__) == SPI4) || \
-                                       ((__INSTANCE__) == SPI5) || \
-                                       ((__INSTANCE__) == SPI6))
+                                           ((__INSTANCE__) == SPI2) || \
+                                           ((__INSTANCE__) == SPI3) || \
+                                           ((__INSTANCE__) == SPI4) || \
+                                           ((__INSTANCE__) == SPI5) || \
+                                           ((__INSTANCE__) == SPI6))
 
 /****************** TIM Instances : All supported instances *******************/
 #define IS_TIM_INSTANCE(__INSTANCE__) (((__INSTANCE__) == TIM1)   || \

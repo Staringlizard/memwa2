@@ -28,7 +28,7 @@
 #include <stdio.h>
 
 /* This must ALWAYS be uppdated for every release */
-#define FW_REVISION             "V1.0.4"
+#define FW_REVISION             "V1.0.5"
 
 #define SDRAM_BANK              FMC_SDRAM_BANK1
 #define SDRAM_ADDR              0x60000000

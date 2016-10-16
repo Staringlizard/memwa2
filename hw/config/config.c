@@ -36,6 +36,7 @@
 #include "stm32f7xx_hal_gpio.h"
 #include "stm32f7xx_hal_i2c_ex.h"
 #include "stm32f7xx_hal_sdram.h"
+#include "stm32f7xx_hal_flash.h"
 #include "sdcard.h"
 #include "sdram.h"
 #include "adv7511.h"
@@ -263,7 +264,6 @@ void HAL_LTDC_MspInit(LTDC_HandleTypeDef *hltdc)
 
     /* Enable the LTDC and DMA2D clocks */
     __HAL_RCC_LTDC_CLK_ENABLE();
-    //__HAL_RCC_DMA2D_CLK_ENABLE();
 
     /* No worries, it will be enabled by hal again */
     //__HAL_LTDC_DISABLE(hltdc);
