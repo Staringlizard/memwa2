@@ -47,59 +47,59 @@ static FMC_SDRAM_TimingTypeDef g_fmc_sdram_timing;
 
 static void sdram_start_sequence()
 {
-	FMC_SDRAM_CommandTypeDef FMC_SDRAM_Command;
-	__IO uint32_t tmpmrd = 0;
+    FMC_SDRAM_CommandTypeDef FMC_SDRAM_Command;
+    __IO uint32_t tmpmrd = 0;
 
-	/* Step 1:  Configure a clock configuration enable command */
-	FMC_SDRAM_Command.CommandMode = FMC_SDRAM_CMD_CLK_ENABLE;
-	FMC_SDRAM_Command.CommandTarget = FMC_SDRAM_CMD_TARGET_BANK1;
-	FMC_SDRAM_Command.AutoRefreshNumber = 1;
-	FMC_SDRAM_Command.ModeRegisterDefinition = 0;
+    /* Step 1:  Configure a clock configuration enable command */
+    FMC_SDRAM_Command.CommandMode = FMC_SDRAM_CMD_CLK_ENABLE;
+    FMC_SDRAM_Command.CommandTarget = FMC_SDRAM_CMD_TARGET_BANK1;
+    FMC_SDRAM_Command.AutoRefreshNumber = 1;
+    FMC_SDRAM_Command.ModeRegisterDefinition = 0;
 
-	/* Send the command */
-	HAL_SDRAM_SendCommand(&g_sdram_handle, &FMC_SDRAM_Command, SDRAM_CMD_TIMEOUT);
+    /* Send the command */
+    HAL_SDRAM_SendCommand(&g_sdram_handle, &FMC_SDRAM_Command, SDRAM_CMD_TIMEOUT);
 
-	/* Step 2: Insert 100 us minimum delay */
-	/* Inserted delay is equal to 1 ms due to systick time base unit (ms) */
-	HAL_Delay(1);
+    /* Step 2: Insert 100 us minimum delay */
+    /* Inserted delay is equal to 1 ms due to systick time base unit (ms) */
+    HAL_Delay(1);
 
-	/* Step 3: Configure a PALL (precharge all) command */
-	FMC_SDRAM_Command.CommandMode = FMC_SDRAM_CMD_PALL;
-	FMC_SDRAM_Command.CommandTarget = FMC_SDRAM_CMD_TARGET_BANK1;
-	FMC_SDRAM_Command.AutoRefreshNumber = 1;
-	FMC_SDRAM_Command.ModeRegisterDefinition = 0;
+    /* Step 3: Configure a PALL (precharge all) command */
+    FMC_SDRAM_Command.CommandMode = FMC_SDRAM_CMD_PALL;
+    FMC_SDRAM_Command.CommandTarget = FMC_SDRAM_CMD_TARGET_BANK1;
+    FMC_SDRAM_Command.AutoRefreshNumber = 1;
+    FMC_SDRAM_Command.ModeRegisterDefinition = 0;
 
-	/* Send the command */
-	HAL_SDRAM_SendCommand(&g_sdram_handle, &FMC_SDRAM_Command, SDRAM_CMD_TIMEOUT);
+    /* Send the command */
+    HAL_SDRAM_SendCommand(&g_sdram_handle, &FMC_SDRAM_Command, SDRAM_CMD_TIMEOUT);
 
-	/* Step 4 : Configure a Auto-Refresh command */
-	FMC_SDRAM_Command.CommandMode = FMC_SDRAM_CMD_AUTOREFRESH_MODE;
-	FMC_SDRAM_Command.CommandTarget = FMC_SDRAM_CMD_TARGET_BANK1;
-	FMC_SDRAM_Command.AutoRefreshNumber = 8;
-	FMC_SDRAM_Command.ModeRegisterDefinition = 0;
+    /* Step 4 : Configure a Auto-Refresh command */
+    FMC_SDRAM_Command.CommandMode = FMC_SDRAM_CMD_AUTOREFRESH_MODE;
+    FMC_SDRAM_Command.CommandTarget = FMC_SDRAM_CMD_TARGET_BANK1;
+    FMC_SDRAM_Command.AutoRefreshNumber = 8;
+    FMC_SDRAM_Command.ModeRegisterDefinition = 0;
 
-	/* Send the command */
-	HAL_SDRAM_SendCommand(&g_sdram_handle, &FMC_SDRAM_Command, SDRAM_CMD_TIMEOUT);
+    /* Send the command */
+    HAL_SDRAM_SendCommand(&g_sdram_handle, &FMC_SDRAM_Command, SDRAM_CMD_TIMEOUT);
 
-	/* Step 5: Program the external memory mode register */
-	tmpmrd = (uint32_t)SDRAM_MODEREG_BURST_LENGTH_1        |
-	                 SDRAM_MODEREG_BURST_TYPE_SEQUENTIAL   |
-	                 SDRAM_MODEREG_CAS_LATENCY_3           |
-	                 SDRAM_MODEREG_OPERATING_MODE_STANDARD |
-	                 SDRAM_MODEREG_WRITEBURST_MODE_SINGLE;
+    /* Step 5: Program the external memory mode register */
+    tmpmrd = (uint32_t)SDRAM_MODEREG_BURST_LENGTH_1        |
+                     SDRAM_MODEREG_BURST_TYPE_SEQUENTIAL   |
+                     SDRAM_MODEREG_CAS_LATENCY_3           |
+                     SDRAM_MODEREG_OPERATING_MODE_STANDARD |
+                     SDRAM_MODEREG_WRITEBURST_MODE_SINGLE;
 
-	FMC_SDRAM_Command.CommandMode = FMC_SDRAM_CMD_LOAD_MODE;
-	FMC_SDRAM_Command.CommandTarget = FMC_SDRAM_CMD_TARGET_BANK1;
-	FMC_SDRAM_Command.AutoRefreshNumber = 1;
-	FMC_SDRAM_Command.ModeRegisterDefinition = tmpmrd;
+    FMC_SDRAM_Command.CommandMode = FMC_SDRAM_CMD_LOAD_MODE;
+    FMC_SDRAM_Command.CommandTarget = FMC_SDRAM_CMD_TARGET_BANK1;
+    FMC_SDRAM_Command.AutoRefreshNumber = 1;
+    FMC_SDRAM_Command.ModeRegisterDefinition = tmpmrd;
 
-	/* Send the command */
-	HAL_SDRAM_SendCommand(&g_sdram_handle, &FMC_SDRAM_Command, SDRAM_CMD_TIMEOUT);
+    /* Send the command */
+    HAL_SDRAM_SendCommand(&g_sdram_handle, &FMC_SDRAM_Command, SDRAM_CMD_TIMEOUT);
 
-	/* Step 6: Set the refresh rate counter */
-	/* (15.62 us x Freq) - 20 */
-	/* Set the device refresh counter */
-	g_sdram_handle.Instance->SDRTR |= ((uint32_t)((1292)<< 1));
+    /* Step 6: Set the refresh rate counter */
+    /* (15.62 us x Freq) - 20 */
+    /* Set the device refresh counter */
+    g_sdram_handle.Instance->SDRTR |= ((uint32_t)((1292)<< 1));
 }
 
 void sdram_init()

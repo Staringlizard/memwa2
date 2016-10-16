@@ -6,8 +6,8 @@
 
 typedef enum
 {
-  SIDBUS_STATE_ACTIVATE_CHIP,
-  SIDBUS_STATE_DATA_SENT
+    SIDBUS_STATE_ACTIVATE_CHIP,
+    SIDBUS_STATE_DATA_SENT
 } sidbus_state_t;
 
 void sidbus_irq();

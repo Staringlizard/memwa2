@@ -31,28 +31,43 @@
 #include "config.h"
 #include "rng.h"
 
+typedef enum
+{
+  WRITE_LOCKED,
+  WRITE_UNLOCKED,
+} write_lock_t;
+
 sidbus_state_t g_sidbus_state;
+
+/*
+ * Not needed for authentic SID chip, rather for
+ * replacements such as swinsid since timing is
+ * slightly different. Performace impact for busy
+ * wait in this case will be very low.
+ */
+volatile static write_lock_t g_lock;
 
 __weak void HAL_SIDBUS_MspInit()
 {
-  ;
+    ;
 }
 
 void sidbus_irq()
 {
     switch(g_sidbus_state)
     {
-      case SIDBUS_STATE_ACTIVATE_CHIP:
-        SID_SET_CS_LOW();
-        g_sidbus_state = SIDBUS_STATE_DATA_SENT;
-        break;
-      case SIDBUS_STATE_DATA_SENT:
-        SID_SET_CS_HIGH();
+        case SIDBUS_STATE_ACTIVATE_CHIP:
+            SID_SET_CS_LOW();
+            g_sidbus_state = SIDBUS_STATE_DATA_SENT;
+            break;
+        case SIDBUS_STATE_DATA_SENT:
+            SID_SET_CS_HIGH();
 
-        /* Disable sidbus IRQ */
-        EXTI->FTSR &= ~GPIO_PIN_13;
-        g_sidbus_state = SIDBUS_STATE_ACTIVATE_CHIP;
-        break;
+            /* Disable sidbus IRQ */
+            EXTI->FTSR &= ~GPIO_PIN_13;
+            g_sidbus_state = SIDBUS_STATE_ACTIVATE_CHIP;
+            g_lock = WRITE_UNLOCKED;
+            break;
     }
 }
 
@@ -62,10 +77,16 @@ void sidbus_init()
     SID_SET_CS_HIGH();
 
     g_sidbus_state = SIDBUS_STATE_ACTIVATE_CHIP;
+    g_lock = WRITE_UNLOCKED;
 }
 
 void sidbus_write(uint8_t addr, uint8_t value)
 {
+    /* Wait until previous write is complete */
+    while(g_lock == WRITE_LOCKED) {;}
+
+    /* Lock write */
+    g_lock = WRITE_LOCKED;
     SID_ASSERT_WRITE();
     SID_SET_ADDR(addr);
     SID_SET_DATA(value);
@@ -76,6 +97,6 @@ void sidbus_write(uint8_t addr, uint8_t value)
 
 uint8_t sidbus_read(uint8_t addr)
 {
-  /* Just return random value for now */
-  return rng_get();
+    /* Just return random value for now */
+    return rng_get();
 }
