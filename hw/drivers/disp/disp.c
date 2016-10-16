@@ -130,7 +130,7 @@ void disp_init(disp_mode_t disp_mode)
             g_ltdc_handle.Init.HSPolarity = LTDC_HSPOLARITY_AL;
             g_ltdc_handle.Init.VSPolarity = LTDC_VSPOLARITY_AL; 
             g_ltdc_handle.Init.DEPolarity = LTDC_DEPOLARITY_AL;  
-            g_ltdc_handle.Init.PCPolarity = LTDC_PCPOLARITY_IPC;
+            g_ltdc_handle.Init.PCPolarity = LTDC_PCPOLARITY_IIPC;
             g_ltdc_handle.Instance = LTDC;
     }
 
